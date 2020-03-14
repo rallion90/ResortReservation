@@ -56,11 +56,15 @@
                         </li>
                         <li><a href="./contact.html">Contact</a></li>
                     @auth    
-                        <li><a href="./blog.html">{{ ucwords(Auth::user()->email) }}</a></li>
+                        <li><a href="#">{{ Auth::user()->email }}</a>
+                            <ul class="drop-menu">
+                                <li><a href="/authentication/logout">Logout</a></li>    
+                            </ul>
+                        </li>
                     @endauth
                     
                     @guest
-                        <li><a href="./blog.html">Login</a></li>
+                        <li><a href="/authentication/login">Login</a></li>
                     @endguest    
                     </ul>
                 </nav>

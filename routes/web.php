@@ -34,6 +34,9 @@ Route::prefix('authentication')->group(function(){
 	//posting
 	Route::post('register', 'AuthController@registration')->name('registration');
 	Route::post('login', 'AuthController@login_trigger')->name('login');
+
+	//logout
+	Route::get('logout', 'AuthController@logout');
 });
 
 Route::prefix('reservation')->group(function(){

@@ -21,6 +21,7 @@
    
    <div class="form-group">
       <p class="text-center">Don't have account? <a href="/authentication/register" id="signup">Sign up here</a></p>
+      <p class="text-center"><a href="{{ route('home') }}">Go to home page</a></p>
    </div>
 </form>
 @endsection

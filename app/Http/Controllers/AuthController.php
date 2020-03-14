@@ -74,4 +74,10 @@ class AuthController extends Controller
       ]);
     }
 
+    public function logout(Request $request){
+        Session::flush();
+        Auth::logout();
+        return Redirect('authentication/login');
+    }
+
 }
