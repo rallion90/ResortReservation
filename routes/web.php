@@ -35,3 +35,7 @@ Route::prefix('authentication')->group(function(){
 	Route::post('register', 'AuthController@registration')->name('registration');
 	Route::post('login', 'AuthController@login_trigger')->name('login');
 });
+
+Route::prefix('reservation')->group(function(){
+	Route::get('entry', 'ReservationController@index');
+});

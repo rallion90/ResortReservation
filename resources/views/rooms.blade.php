@@ -45,7 +45,7 @@
                             <p>Pool</p>
                         </div>
                     </div>
-                    <a href="#" class="primary-btn">Make a Reservation</a>
+                    <a href="" class="primary-btn">Make a Reservation</a>
                 </div>
             </div>
         </div>
