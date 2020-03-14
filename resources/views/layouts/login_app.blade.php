@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <title>Please Login</title>
+
+      <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+      <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+      <!------ Include the above in your HEAD tag ---------->
+
+      <script src="https://cdn.jsdelivr.net/jquery.validation/1.15.1/jquery.validate.min.js"></script>
+      <link href="https://fonts.googleapis.com/css?family=Kaushan+Script" rel="stylesheet">
+      <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+   </head>
+   
+   <body>
+      <div class="container">
+         <div class="row">
+            <div class="col-md-5 mx-auto">
+               <br>
+               <br>
+               <br>
+               <br>
+               <div id="first">
+                  <div class="myform form ">
+                     <div class="logo mb-3">
+                        <div class="col-md-12 text-center">
+                           <h1>Login</h1>
+                        </div>
+                     </div>
+                     @if(Session::has('register'))
+                        <p class="alert alert-info text-center">{{ Session::get('register') }}</p>
+                     @endif
+                     
+                     @yield('content')
+                     
+                  </div>
+               </div>
+               
+            </div>
+         </div>
+      </div>
+      
+   </body>
+   
+</html>
