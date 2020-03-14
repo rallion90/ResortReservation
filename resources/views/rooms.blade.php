@@ -45,7 +45,14 @@
                             <p>Pool</p>
                         </div>
                     </div>
-                    <a href="" class="primary-btn">Make a Reservation</a>
+                @auth
+                    <a href="/reservation/entry" class="primary-btn">Make a Reservation</a>
+                @endauth
+
+                @guest
+                    <a href="/authentication/login" class="primary-btn">Make a Reservation</a>
+                @endguest    
+                    
                 </div>
             </div>
         </div>
