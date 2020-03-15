@@ -54,7 +54,7 @@
                                 <li><a href="services.html">Services</a></li>
                             </ul>
                         </li>
-                        <li><a href="./contact.html">Contact</a></li>
+                        
                     @auth    
                         <li><a href="#">{{ Auth::user()->email }}</a>
                             <ul class="drop-menu">
