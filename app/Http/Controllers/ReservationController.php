@@ -69,12 +69,10 @@ class ReservationController extends Controller
     		->setDescription("Payment description")
     		->setInvoiceNumber(uniqid());
 
-    	//$baseUrl = getBaseUrl();
 		$redirectUrls = new RedirectUrls();
-		//$redirectUrls->setReturnUrl("$baseUrl/ExecutePayment.php?success=true")
-    		//->setCancelUrl("$baseUrl/ExecutePayment.php?success=false");
+		
 
-    	$redirectUrls->setReturnUrl("http://127.0.0.1:8000/sadyaya/home")
+    	$redirectUrls->setReturnUrl("http://127.0.0.1:8000/reservation/payment_execute")
     		->setCancelUrl("http://127.0.0.1:8000/sadyaya/home");
 
     	$payment = new Payment();
@@ -93,5 +91,9 @@ class ReservationController extends Controller
 		}
 
 		return $payment;
+    }
+
+    public function payment_execute(){
+    	return redirect()->route('home');
     }
 }

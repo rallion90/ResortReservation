@@ -211,7 +211,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
         payerID:   data.payerID
       })
         .then(function(res) {
-          // 3. Show the buyer a confirmation message.
+          alert('Transaction Succesful');
         });
     }
   }, '#paypal-button');
