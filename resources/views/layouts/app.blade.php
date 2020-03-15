@@ -206,6 +206,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     onAuthorize: function(data, actions) {
       // 2. Make a request to your server
       return actions.request.post('/reservation/payment_execute', {
+        _token: '{{csrf_token()}}',
         paymentID: data.paymentID,
         payerID:   data.payerID
       })
