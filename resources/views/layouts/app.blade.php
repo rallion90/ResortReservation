@@ -162,6 +162,8 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
         <script>alert("{{ Session::get('login_success') }} {{ ucwords(Auth::user()->fullname) }}!");</script>
     @endif
 
+
+
     <!-- Js Plugins -->
     <script src="{{ URL::asset('js/jquery-3.3.1.min.js') }}"></script>
     <script src="{{ URL::asset('js/bootstrap.min.js') }}"></script>
@@ -174,3 +176,42 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 </body>
 
 </html>
+
+<script src="https://www.paypalobjects.com/api/checkout.js"></script>
+
+
+
+<script>
+  paypal.Button.render({
+    env: 'sandbox', // Or 'production'
+
+    style: {
+        size: 'medium',
+        color: 'gold',
+        shape: 'pill'
+    },
+    // Set up the payment:
+    // 1. Add a payment callback
+    payment: function(data, actions) {
+      // 2. Make a request to your server
+      return actions.request.post('/reservation/payment_create',{
+        _token: '{{csrf_token()}}'
+      }).then(function(res) {
+          // 3. Return res.id from the response
+          return res.id;
+        });
+    },
+    // Execute the payment:
+    // 1. Add an onAuthorize callback
+    onAuthorize: function(data, actions) {
+      // 2. Make a request to your server
+      return actions.request.post('/reservation/payment_execute', {
+        paymentID: data.paymentID,
+        payerID:   data.payerID
+      })
+        .then(function(res) {
+          // 3. Show the buyer a confirmation message.
+        });
+    }
+  }, '#paypal-button');
+</script>

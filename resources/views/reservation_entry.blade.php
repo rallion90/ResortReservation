@@ -70,7 +70,7 @@
 
 					<div class="col-md-12">
 						<div class="form-group">
-							<button class="btn btn-info">Submit</button>
+							<div id="paypal-button"></div>
 						</div>
 					</div>
 				</div>

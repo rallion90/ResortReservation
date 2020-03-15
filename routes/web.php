@@ -41,4 +41,8 @@ Route::prefix('authentication')->group(function(){
 
 Route::prefix('reservation')->group(function(){
 	Route::get('entry', 'ReservationController@index');
+
+	Route::post('payment_create', 'ReservationController@payment_create');
+
+	Route::post('payment_execute', 'ReservationController@payment_execute');
 });
