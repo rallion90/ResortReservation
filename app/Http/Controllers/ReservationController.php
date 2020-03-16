@@ -23,7 +23,7 @@ class ReservationController extends Controller
     }
 
     public function payment_create(Request $request){
-    	$room_price = $request->input('room_id');
+    	/*$room_id = $request->input('room_id');
     	$room_name = $request->input('room_name');
     	$room_price = $request->input('room_price');
 
@@ -41,32 +41,20 @@ class ReservationController extends Controller
     	$payer->setPaymentMethod("paypal");
 
     	$item1 = new Item();
-    	$item1->setName('Ground Coffee 40 oz')
+    	$item1->setName($room_name)
 		    ->setCurrency('USD')
 		    ->setQuantity(1)
-		    ->setSku("123123") // Similar to `item_number` in Classic API
-		    ->setPrice(7.5);
-		$item2 = new Item();
-		$item2->setName('Granola bars')
-		    ->setCurrency('USD')
-		    ->setQuantity(5)
-		    ->setSku("321321") // Similar to `item_number` in Classic API
-		    ->setPrice(2);
-
+		    ->setSku($room_id) // Similar to `item_number` in Classic API
+		    ->setPrice($room_price);
 		$itemList = new ItemList();
-		$itemList->setItems(array($item1, $item2));
+		$itemList->setItems(array($item1));
 
 		
 
-		$details = new Details();
-		$details->setShipping(1.2)
-    		->setTax(1.3)
-    		->setSubtotal(17.50);
-
     	$amount = new Amount();
 		$amount->setCurrency("USD")
-    		->setTotal(20)
-    		->setDetails($details);
+    		->setTotal($room_price);
+    		
 
     	$transaction = new Transaction();
 		$transaction->setAmount($amount)
@@ -89,7 +77,9 @@ class ReservationController extends Controller
 		$request = clone $payment;
 		$payment->create($api);
 
-		return $payment;
+		return $payment;*/
+
+		return $request->room_price;
     }
 
     public function payment_execute(Request $request){

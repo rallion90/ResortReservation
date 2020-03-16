@@ -1,6 +1,7 @@
 @extends('layouts.app')
 @section('content')
-<form action="">
+<form action="{{ route('payment_create') }}" method="post">
+@csrf
 	<div class="container">
 		<div class="row">
 			<div class="col-md-6">
