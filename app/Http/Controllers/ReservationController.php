@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Rooms;
+
 use PayPal\Rest\ApiContext;
 use PayPal\Api\Amount;
 use PayPal\Api\Details;
@@ -18,15 +20,11 @@ use PayPal\Api\PaymentExecution;
 
 class ReservationController extends Controller
 {
-    public function index(){
+    public function index($room_id){
     	return view('reservation_entry');
     }
 
-    public function payment_create(Request $request){
-    	/*$room_id = $request->input('room_id');
-    	$room_name = $request->input('room_name');
-    	$room_price = $request->input('room_price');
-
+    public function payment_create(Request $request, $room_id){
     	$api = new \PayPal\Rest\ApiContext(
 
     		new \PayPal\Auth\OAuthTokenCredential(
@@ -41,11 +39,11 @@ class ReservationController extends Controller
     	$payer->setPaymentMethod("paypal");
 
     	$item1 = new Item();
-    	$item1->setName($room_name)
+    	$item1->setName($request->input('room_name'))
 		    ->setCurrency('USD')
 		    ->setQuantity(1)
 		    ->setSku($room_id) // Similar to `item_number` in Classic API
-		    ->setPrice($room_price);
+		    ->setPrice($request->input('room_price'));
 		$itemList = new ItemList();
 		$itemList->setItems(array($item1));
 
@@ -53,13 +51,13 @@ class ReservationController extends Controller
 
     	$amount = new Amount();
 		$amount->setCurrency("USD")
-    		->setTotal($room_price);
+    		->setTotal($request->input('room_price'));
     		
 
     	$transaction = new Transaction();
 		$transaction->setAmount($amount)
     		->setItemList($itemList)
-    		->setDescription("Payment description")
+    		->setDescription("Reservation Succesful")
     		->setInvoiceNumber(uniqid());
 
 		$redirectUrls = new RedirectUrls();
@@ -77,12 +75,12 @@ class ReservationController extends Controller
 		$request = clone $payment;
 		$payment->create($api);
 
-		return $payment;*/
+		return $payment;
 
-		return $request->room_price;
+		
     }
 
-    public function payment_execute(Request $request){
+    public function payment_execute(Request $request, $room_id){
     	/*$api = new \PayPal\Rest\ApiContext(
 
     		new \PayPal\Auth\OAuthTokenCredential(
@@ -118,6 +116,6 @@ class ReservationController extends Controller
 
     	return $result;*/
 
-    	return $request->paymentID;
+    	return $request->all();
     }
 }

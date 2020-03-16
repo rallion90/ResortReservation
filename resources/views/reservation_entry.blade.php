@@ -28,17 +28,17 @@
 					<div class="col-md-12">
 						<div class="form-group">
 							<span class="form-label">Room Name</span>
-							<input class="form-control" name="room_name" type="text" disabled value="Room Name" required>
+							<input class="form-control" name="room_name" type="text" readonly value="Room Name" required>
 						</div>
 					</div>
 
 					<div class="col-md-12">
 						<div class="form-group">
 							<span class="form-label">Room Price</span>
-							<input class="form-control" name="room_price" disabled value="1000" type="text" required>
+							<input class="form-control" name="room_price"  value="150" type="text" readonly required>
 						</div>
 
-						<input type="hidden" name="room_id" value="">
+						<!--<input type="hidden" name="room_id" value="1">-->
 					</div>
 				</div>
 				
@@ -75,6 +75,8 @@
 						<div class="form-group">
 							<div id="paypal-button"></div>
 						</div>
+
+						
 					</div>
 				</div>
 			</div>

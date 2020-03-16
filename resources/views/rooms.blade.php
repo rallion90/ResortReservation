@@ -46,7 +46,7 @@
                         </div>
                     </div>
                 @auth
-                    <a href="/reservation/entry" class="primary-btn">Make a Reservation</a>
+                    <a href="/reservation/entry/{{$room->room_id}}" class="primary-btn">Make a Reservation</a>
                 @endauth
 
                 @guest

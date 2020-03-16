@@ -43,10 +43,13 @@ Route::prefix('authentication')->group(function(){
 
 Route::group(['middleware' => ['auth']], function() {
 	Route::prefix('reservation')->group(function(){
-		Route::get('entry', 'ReservationController@index');
+
+		Route::get('entry/{room_id}', 'ReservationController@index');
 
 		Route::post('payment_create', 'ReservationController@payment_create')->name('payment_create');
 
-		Route::post('payment_execute', 'ReservationController@payment_execute');
+		Route::post('payment_execute/{room_id}', 'ReservationController@payment_execute');
+
+		Route::post('testing', 'testController@testing');
 	});
 });
