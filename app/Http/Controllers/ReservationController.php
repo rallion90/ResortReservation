@@ -14,6 +14,7 @@ use PayPal\Api\Payer;
 use PayPal\Api\Payment;
 use PayPal\Api\RedirectUrls;
 use PayPal\Api\Transaction;
+use PayPal\Api\PaymentExecution;
 
 class ReservationController extends Controller
 {
@@ -21,7 +22,11 @@ class ReservationController extends Controller
     	return view('reservation_entry');
     }
 
-    public function payment_create(){
+    public function payment_create(Request $request){
+    	$room_price = $request->input('room_id');
+    	$room_name = $request->input('room_name');
+    	$room_price = $request->input('room_price');
+
     	$api = new \PayPal\Rest\ApiContext(
 
     		new \PayPal\Auth\OAuthTokenCredential(
@@ -72,7 +77,7 @@ class ReservationController extends Controller
 		$redirectUrls = new RedirectUrls();
 		
 
-    	$redirectUrls->setReturnUrl("http://127.0.0.1:8000/reservation/payment_execute")
+    	$redirectUrls->setReturnUrl("http://127.0.0.1:8000/sadyaya/home")
     		->setCancelUrl("http://127.0.0.1:8000/sadyaya/home");
 
     	$payment = new Payment();
@@ -82,18 +87,47 @@ class ReservationController extends Controller
 		    ->setTransactions(array($transaction));
 
 		$request = clone $payment;
-
-		try{
-			$payment->create($api);
-		}catch(Exception $ex){
-			ResultPrinter::printError("Created Payment Using PayPal. Please visit the URL to Approve.", "Payment", null, $request, $ex);
-    		exit(1);
-		}
+		$payment->create($api);
 
 		return $payment;
     }
 
-    public function payment_execute(){
-    	return redirect()->route('home');
+    public function payment_execute(Request $request){
+    	/*$api = new \PayPal\Rest\ApiContext(
+
+    		new \PayPal\Auth\OAuthTokenCredential(
+    			'AQTwAvDxqrsEWy1l7DhQ49gRF-E-mygfvqe5rsdZpAXQwjLVUB5ZSfl8_OFAZlc_DFb3DZPfn5_jcDWn',
+    			//Client Id
+    			'EBkm03IA73Drp4MjeLjgZpkmXTXtWfDFBaKTGNcuhQSfKvoDMa6xgkAFW__CQTvhesbSGYrhvUC9t1bs'
+    			//Client Secret
+    		)
+    	);
+
+    	$payment_id = $request->paymentID;
+    	$payment = Payment::get($payment_id, $api);
+
+    	$execution = new PaymentExecution();
+    	$execution->setPayerId($request->payerID);
+
+    	$transaction = new Transaction();
+    	$amount = new Amount();
+    	$details = new Details();
+
+    	$details->setShipping(2.2)
+        	->setTax(1.3)
+        	->setSubtotal(17.50);
+
+        $amount->setCurrency('USD');
+    	$amount->setTotal(21);
+    	$amount->setDetails($details);
+    	$transaction->setAmount($amount);
+
+    	$execution->addTransaction($transaction);
+
+    	$result = $payment->execute($execution, $api);
+
+    	return $result;*/
+
+    	return $request->paymentID;
     }
 }
