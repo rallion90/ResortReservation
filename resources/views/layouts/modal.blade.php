@@ -30,14 +30,11 @@
 
             <div class="form-group">
               <label for="recipient-name" class="col-form-label">Date Start</label>
-              <input type="date" class="datee form-control" name="event_date_start" id="date_start"  required>
+              <input type="date" class="datee form-control" name="date_start" id="date_start"  required>
             </div>
             <div class="form-group">
               <label for="recipient-name" class="col-form-label">Date End</label>
-              <input type="date" class="datee form-control" name="event_date_end" id="date_end" required>
-            </div>
-            <div class="form-group">
-              <input type="hidden" class="form-control" name="current_room" value="" id="recipient-name" required>
+              <input type="date" class="datee form-control" name="date_end" id="date_end" required>
             </div>
           </div>
 
@@ -53,16 +50,12 @@
 
             <div class="form-group">
               <label for="sel1">Last Name:</label>
-              <input type="text" class="datee form-control" placeholder="Enter Last Name" name="firstname">
+              <input type="text" class="datee form-control" placeholder="Enter Last Name" name="lastname">
             </div>
 
             <div class="form-group">
               <label for="sel1">Email:</label>
-              <input type="text" class="datee form-control" placeholder="Enter Email Address" name="firstname">
-            </div>
-            
-            <div class="form-group">
-              <input type="hidden" class="form-control" name="current_room" value="" id="recipient-name" required>
+              <input type="text" class="datee form-control" placeholder="Enter Email Address" name="email">
             </div>
           </div>
 
