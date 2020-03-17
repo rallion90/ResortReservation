@@ -193,6 +193,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     <script src="{{ URL::asset('js/jquery.slicknav.js') }}"></script>
     <script src="{{ URL::asset('js/owl.carousel.min.js') }}"></script>
     <script src="{{ URL::asset('js/main.js') }}"></script>
+    <script src="{{ URL::asset('js/moment.js') }}"></script>
 </body>
 
 </html>
@@ -256,9 +257,11 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
         //alert('selected ' + info.startStr + ' to ' + info.endStr);
         //var date_start = info.startStr;
         //var date_end = info.endStr;
+        var start = moment(info.startStr).format('YYYY-MM-DD');
+        var end = moment(info.endStr).format('YYYY-MM-DD');
         $('#exampleModal').modal('show');
-        $('#date_start').val(info.startStr);
-        $('#date_end').val(info.endStr);
+        $('#date_start').val(start);
+        $('#date_end').val(end);
       }
     });
 

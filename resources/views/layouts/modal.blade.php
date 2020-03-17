@@ -9,7 +9,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form method="post" action="/reservation/confirmation">
+        <form method="post" action="/reservation/validate_entry">
           @csrf
 
           <div class="form-group">

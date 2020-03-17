@@ -56,6 +56,6 @@ Route::group(['middleware' => ['auth']], function() {
 
 		Route::get('calendar_data', 'ReservationController@calendar')->name('calendar');
 
-		Route::post('confirmation', 'ReservationController@confirmation');
+		Route::post('validate_entry', 'ReservationController@validate_entry');
 	});
 });

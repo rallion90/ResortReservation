@@ -150,7 +150,7 @@ class ReservationController extends Controller
         return response()->json($array_data);
     }
 
-    public function confirmation(Request $request){
+    /*public function confirmation(Request $request){
         $room_name = $request->input('room');
         $date_start = $request->input('date_start');
         $first_name = $request->input('firstname');
@@ -165,5 +165,24 @@ class ReservationController extends Controller
             'lastname' => $last_name,
             'email' => $email
         ]);
+    }*/
+
+    public function validate_entry(Request $request){
+        $reservations = new Reservations;
+        $date_start = $request->input('date_start');
+        $date_end = $request->input('date_end');
+
+        /**$validation = $reservations::wherebetween('start', [$date_start, $date_end])->where('tag_deleted', '=', 0);*/
+
+        $check_date = $reservations::whereBetween('date_start', [$date_start, $date_end])->whereBetween('date_end', [$date_start, $date_end])->where('tag_deleted', '=', 0)->get();
+
+        //$filter = $check_date->all();
+
+        if($check_date->isEmpty()){
+            
+        }
+        else{
+            echo "occupied";
+        }
     }
 }
