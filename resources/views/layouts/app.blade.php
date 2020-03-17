@@ -251,7 +251,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
       editable: true,
       selectable: true,
       eventLimit: true, // allow "more" link when too many events
-      events: '',
+      events: '{{ route("calendar") }}',
       select: function(info){
         //alert('selected ' + info.startStr + ' to ' + info.endStr);
         //var date_start = info.startStr;

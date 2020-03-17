@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 
 use App\Rooms;
 
+use App\Reservations;
+
 use PayPal\Rest\ApiContext;
 use PayPal\Api\Amount;
 use PayPal\Api\Details;
@@ -125,5 +127,30 @@ class ReservationController extends Controller
 
     public function reservation_info(){
         
+    }
+
+    public function calendar(){
+        $reservations = new Reservations;
+
+        $array_data = array(array());
+
+        $get_data = $reservations::where('tag_deleted', '=', 0)->get();
+
+        foreach($get_data as $data => $key){
+            $events = array(
+                'title' => $key->room_id,
+                'start' => $key->date_start,
+                'end' => $key->date_end,
+            );
+
+            array_push($array_data, $events);
+
+        }
+
+        return response()->json($array_data);
+
+        
+
+
     }
 }

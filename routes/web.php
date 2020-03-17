@@ -53,5 +53,7 @@ Route::group(['middleware' => ['auth']], function() {
 		Route::post('reservation_info/{room_id}', 'ReservationController@reservation_info');
 
 		Route::post('testing', 'testController@testing');
+
+		Route::get('calendar_data', 'ReservationController@calendar')->name('calendar');
 	});
 });
