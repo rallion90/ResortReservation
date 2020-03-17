@@ -73,69 +73,27 @@
 	</div>
 </div>
 </section>
+<br>
 <!-- Facilities Section End -->
 <!-- Testimonial Section Begin -->
-<section class="testimonial-section spad">
 <div class="container">
-	<div class="row">
-		<div class="section-title">
-			<h2>Guestbook</h2>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-lg-6">
-			<div class="testimonial-item">
-				<div class="ti-time">
-					02 / 02 / 2019
+	<div class="row intro-text">
+		<div class="col-lg-12">
+			<div class="intro-left">
+				<div class="section-title">
+					<span>You can Reserved Here</span>
+					<h2>A great stay in a<br /> lovely hotel.</h2>
 				</div>
-				<h4>We loved our stay</h4>
-				<div class="rating">
-					<i class="fa fa-star"></i>
-					<i class="fa fa-star"></i>
-					<i class="fa fa-star"></i>
-					<i class="fa fa-star"></i>
-					<i class="fa fa-star"></i>
-				</div>
-				<p>Lorem ipsum dolor sit amet, consectetur adipiselit. Vivamus libero mauris, bibendum eget
-				sapien ac, ultrices rhoncus ipsum. Donec nec sapien in urna fermentum ornare.</p>
-				<div class="ti-author">
-					<div class="author-pic">
-						<img src="{{ URL::asset('img/author-1.png') }}" alt="">
-					</div>
-					<div class="author-text">
-						<h6>JOHN DOE <span>Madrid</span></h6>
-					</div>
+				<div class="container">
+					<div id='calendar'></div>
+					
 				</div>
 			</div>
 		</div>
-		<div class="col-lg-6">
-			<div class="testimonial-item">
-				<div class="ti-time">
-					02 / 02 / 2019
-				</div>
-				<h4>I will come back again</h4>
-				<div class="rating">
-					<i class="fa fa-star"></i>
-					<i class="fa fa-star"></i>
-					<i class="fa fa-star"></i>
-					<i class="fa fa-star"></i>
-					<i class="fa fa-star"></i>
-				</div>
-				<p>Ipsum dolor sit amet, consectetur adipiselit. Vivamus libero mauris, bibendum eget sapien ac,
-				ultrices rhoncus ipsum. Donec nec sapien in urna fermentum ornare.</p>
-				<div class="ti-author">
-					<div class="author-pic">
-						<img src="{{ URL::asset('img/author-2.png') }}" alt="">
-					</div>
-					<div class="author-text">
-						<h6>Maria Smith <span>Madrid</span></h6>
-					</div>
-				</div>
-			</div>
-		</div>
+		
 	</div>
 </div>
-</section>
+<br>
 <!-- Testimonial Section End -->
 <!-- Video Section Begin -->
 <div class="video-section">

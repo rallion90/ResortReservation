@@ -1,6 +1,9 @@
 @extends('layouts.app')
 @section('content')
-<form action="{{ route('payment_create') }}" method="post">
+
+
+<br>
+<form action="/reservation/reservation_info/<?php echo $id;?>" method="post">
 @csrf
 	<div class="container">
 		<div class="row">
@@ -38,7 +41,7 @@
 							<input class="form-control" name="room_price"  value="150" type="text" readonly required>
 						</div>
 
-						<!--<input type="hidden" name="room_id" value="1">-->
+						<input type="hidden" name="room_id" value="<?php echo $id;?>">
 					</div>
 				</div>
 				
@@ -53,7 +56,7 @@
 					<div class="col-md-12">
 						<div class="form-group">
 							<span class="form-label">First Name</span>
-							<input class="form-control" name="first_name" type="text" required>
+							<input class="form-control" name="first_name" type="text"  required>
 						</div>
 					</div>
 
@@ -73,7 +76,8 @@
 
 					<div class="col-md-12">
 						<div class="form-group">
-							<div id="paypal-button"></div>
+							<!--<div id="paypal-button"></div>-->
+							<button class="submit" onclick="get_confirmation()">Submit</button>
 						</div>
 
 						

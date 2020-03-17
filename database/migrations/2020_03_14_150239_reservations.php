@@ -19,7 +19,7 @@ class Reservations extends Migration
             $table->integer('room_id');
             $table->string('email');
             $table->string('first_name');
-            $table->string('middle_name');
+           
             $table->string('last_name');
             $table->string('txn_id');
             $table->integer('verification_number');

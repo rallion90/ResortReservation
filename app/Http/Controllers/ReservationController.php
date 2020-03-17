@@ -21,11 +21,15 @@ use PayPal\Api\PaymentExecution;
 class ReservationController extends Controller
 {
     public function index($room_id){
-    	return view('reservation_entry');
+        
+    	return view('reservation_entry', ['id' => $room_id]);
     }
 
-    public function payment_create(Request $request, $room_id){
-    	$api = new \PayPal\Rest\ApiContext(
+    public function payment_create(Request $request){
+
+        return $request->all();
+
+    	/*$api = new \PayPal\Rest\ApiContext(
 
     		new \PayPal\Auth\OAuthTokenCredential(
     			'AQTwAvDxqrsEWy1l7DhQ49gRF-E-mygfvqe5rsdZpAXQwjLVUB5ZSfl8_OFAZlc_DFb3DZPfn5_jcDWn',
@@ -42,7 +46,7 @@ class ReservationController extends Controller
     	$item1->setName($request->input('room_name'))
 		    ->setCurrency('USD')
 		    ->setQuantity(1)
-		    ->setSku($room_id) // Similar to `item_number` in Classic API
+		    ->setSku($request->input('room_id')) // Similar to `item_number` in Classic API
 		    ->setPrice($request->input('room_price'));
 		$itemList = new ItemList();
 		$itemList->setItems(array($item1));
@@ -75,7 +79,7 @@ class ReservationController extends Controller
 		$request = clone $payment;
 		$payment->create($api);
 
-		return $payment;
+		return $payment;*/
 
 		
     }
@@ -117,5 +121,9 @@ class ReservationController extends Controller
     	return $result;*/
 
     	return $request->all();
+    }
+
+    public function reservation_info(){
+        
     }
 }

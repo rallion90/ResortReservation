@@ -24,6 +24,26 @@
     <link rel="stylesheet" href="{{ URL::asset('css/magnific-popup.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ URL::asset('css/slicknav.min.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ URL::asset('css/style.css') }}" type="text/css">
+    <!--full calendar-->
+    <link href='{{ URL::asset("fullcalendar/core/main.css") }}' rel='stylesheet' />
+    <link href='{{ URL::asset("fullcalendar/daygrid/main.css") }}' rel='stylesheet' />
+    <link href='{{ URL::asset("fullcalendar/timegrid/main.css") }}' rel='stylesheet' />
+    <link href='{{ URL::asset("fullcalendar/list/main.css") }}' rel='stylesheet' />
+
+    <script src='{{ URL::asset("fullcalendar/core/main.js") }}'></script>
+    <script src='{{ URL::asset("fullcalendar/interaction/main.js") }}'></script>
+    <script src='{{ URL::asset("fullcalendar/daygrid/main.js") }}'></script>
+    <script src='{{ URL::asset("fullcalendar/timegrid/main.js") }}'></script>
+    <script src='{{ URL::asset("fullcalendar/list/main.js") }}'></script>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+
+    <style>
+        #calendar {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+    </style>
 </head>
 
 <body>
@@ -216,3 +236,47 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     }
   }, '#paypal-button');
 </script>
+
+<script>
+
+  /// FullCalendar Latest
+// Script modified from the "theme.html" demo file
+
+    document.addEventListener('DOMContentLoaded', function() {
+    var calendarEl = document.getElementById('calendar');
+
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+      plugins: [ 'interaction', 'dayGrid' ],
+      defaultDate: '2020-02-12',
+      editable: true,
+      selectable: true,
+      eventLimit: true, // allow "more" link when too many events
+      events: '',
+      select: function(info){
+        //alert('selected ' + info.startStr + ' to ' + info.endStr);
+        //var date_start = info.startStr;
+        //var date_end = info.endStr;
+        $('#exampleModal').modal('show');
+        $('#date_start').val(info.startStr);
+        $('#date_end').val(info.endStr);
+      }
+    });
+
+    calendar.render();
+  });
+
+</script>
+
+<script type="text/javascript">
+    $('#exampleModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget) // Button that triggered the modal
+        var recipient = button.data('whatever') // Extract info from data-* attributes
+        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+        var modal = $(this)
+        modal.find('.modal-title').text('New message to ' + recipient)
+        modal.find('.modal-body input').val(recipient)
+    });
+</script>
+
+@extends('layouts.modal')
