@@ -292,7 +292,7 @@ a {
                                     <td class="content-block">
                                         <table class="invoice">
                                             <tbody><tr>
-                                                <td><?php echo $firstname." ".$lastname; ?><br>Invoice #12345<br>June 01 2015 <br>ralphlaynes@gmail.com</td>
+                                                <td>Ralph Rallion Laynes<br>Invoice #12345<br>June 01 2015 <br>ralphlaynes@gmail.com</td>
                                               
 
                                             </tr>

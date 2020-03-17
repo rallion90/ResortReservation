@@ -169,20 +169,34 @@ class ReservationController extends Controller
 
     public function validate_entry(Request $request){
         $reservations = new Reservations;
+        $room_id = $request->input('room');
         $date_start = $request->input('date_start');
         $date_end = $request->input('date_end');
 
-        /**$validation = $reservations::wherebetween('start', [$date_start, $date_end])->where('tag_deleted', '=', 0);*/
+        $firstname = $request->input('firstname');
+        $lastname = $request->input('lastname');
+        $email = $request->input('email');
 
-        $check_date = $reservations::whereBetween('date_start', [$date_start, $date_end])->whereBetween('date_end', [$date_start, $date_end])->where('tag_deleted', '=', 0)->get();
+        $validation = $reservations::whereBetween('date_start', [$date_start, $date_end])->where('tag_deleted', '=', 0)->get();
+
+        //$check_date = $reservations::whereBetween('date_start', [$date_start, $date_end])->whereBetween('date_end', [$date_start, $date_end])->where('tag_deleted', '=', 0)->get();
 
         //$filter = $check_date->all();
 
-        if($check_date->isEmpty()){
-            
+        if($validation->isEmpty()){
+            $data = array(
+                'room_id' => $room_id,
+                'date_start' => $date_start,
+                'date_end' => $date_end,
+                'firstname' => $firstname,
+                'lastname' => $lastname,
+                'email' => $email
+            );
+
+            return view('confirmation', compact('data'));
         }
         else{
-            echo "occupied";
+            return view('index');
         }
     }
 }
