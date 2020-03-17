@@ -184,7 +184,7 @@ class ReservationController extends Controller
         //$filter = $check_date->all();
 
         if($validation->isEmpty()){
-            $data = array(
+            $datas[] = array(
                 'room_id' => $room_id,
                 'date_start' => $date_start,
                 'date_end' => $date_end,
@@ -193,7 +193,9 @@ class ReservationController extends Controller
                 'email' => $email
             );
 
-            return view('confirmation', compact('data'));
+            return view('confirmation', compact('datas'));
+
+            //var_dump($datas);
         }
         else{
             return view('index');

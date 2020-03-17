@@ -272,7 +272,7 @@ a {
 
 </style>
 <body>
-	<br>
+	<!--<br>
 	<br>
 	<table class="body-wrap">
     <tbody><tr>
@@ -329,9 +329,7 @@ a {
                                     </td>
                                 </tr>
                                 <tr>
-                                    <!--<td class="content-block">
-                                        Company Inc. 123 Van Ness, San Francisco 94102
-                                    </td>-->
+                                    
                                 </tr>
                             </tbody></table>
                         </td>
@@ -348,7 +346,16 @@ a {
         <td></td>
     </tr>
 </tbody>
-</table>
+</table>-->
+
+@foreach($datas as $data)
+    <p>{{ $data['firstname'] }}</p>
+    <p>{{ $data['room_id'] }}</p>
+    <p>{{ $data['date_start'] }}</p>
+    <p>{{ $data['date_end'] }}</p>
+
+@endforeach
+
 </body>
 </html>
 
