@@ -148,9 +148,22 @@ class ReservationController extends Controller
         }
 
         return response()->json($array_data);
+    }
 
-        
+    public function confirmation(Request $request){
+        $room_name = $request->input('room');
+        $date_start = $request->input('date_start');
+        $first_name = $request->input('firstname');
+        $last_name = $request->input('lastname');
+        $email = $request->input('email');
 
+        //$get_data = $request->all();
 
+        return view('confirmation', [
+            'room' => $room_name,
+            'firstname' => $first_name,
+            'lastname' => $last_name,
+            'email' => $email
+        ]);
     }
 }
