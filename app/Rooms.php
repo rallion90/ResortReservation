@@ -11,5 +11,11 @@ class Rooms extends Model
 
     public $timestamps = false;
 
-    protected $fillable = ['room_name', 'room_description', 'room_price'];
+    protected $fillable = ['room_id', 'room_name', 'room_description', 'room_price'];
+
+    
+
+    
+
+
 }

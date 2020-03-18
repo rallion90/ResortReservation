@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use DB;
+
 use App\Rooms;
 
 use App\Reservations;
@@ -130,15 +132,16 @@ class ReservationController extends Controller
     }
 
     public function calendar(){
+        $array_data = array(array());
         $reservations = new Reservations;
 
-        $array_data = array(array());
+        //$rooms = new Rooms;
 
         $get_data = $reservations::where('tag_deleted', '=', 0)->get();
 
         foreach($get_data as $data => $key){
             $events = array(
-                'title' => $key->room_id,
+                'title' => $key->fetch_information->room_name,
                 'start' => $key->date_start,
                 'end' => $key->date_end,
             );
