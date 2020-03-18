@@ -293,7 +293,7 @@ a {
                                     <td class="content-block">
                                         <table class="invoice">
                                             <tbody><tr>
-                                                <td>{{ $key['firstname'] }}<br>Invoice #12345<br>June 01 2015 <br>{{ $data['email'] }}</td>
+                                                <td>{{ ucwords($key['firstname']) }} {{ ucwords($key['lastname']) }}<br>Invoice #12345<br>June 01 2015 <br>{{ $data['email'] }}</td>
                                               
 
                                             </tr>
@@ -303,12 +303,12 @@ a {
                                                         <tbody>
                                                         
                                                         <tr>
-                                                            <td>{{ $key['room_id'] }}</td>
-                                                            <td class="alignright">$ 6.00</td>
+                                                            <td>{{ ucwords($key['room_name']) }}</td>
+                                                            <td class="alignright">$ {{ $key['room_price'] }}</td>
                                                         </tr>
                                                         <tr class="total">
                                                             <td class="alignright" width="80%">Total</td>
-                                                            <td class="alignright">$ 36.00</td>
+                                                            <td class="alignright">$ {{ $key['total'] }}</td>
                                                         </tr>
                                                     </tbody></table>
                                                 </td>

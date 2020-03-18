@@ -11,6 +11,8 @@ use App\Rooms;
 
 use App\Reservations;
 
+use Carbon\Carbon;
+
 use PayPal\Rest\ApiContext;
 use PayPal\Api\Amount;
 use PayPal\Api\Details;
@@ -172,13 +174,22 @@ class ReservationController extends Controller
 
     public function validate_entry(Request $request){
         $reservations = new Reservations;
-        $room_id = $request->input('room');
+        $room_name = $request->input('room');
         $date_start = $request->input('date_start');
         $date_end = $request->input('date_end');
 
         $firstname = $request->input('firstname');
         $lastname = $request->input('lastname');
         $email = $request->input('email');
+
+        $to = \Carbon\Carbon::createFromFormat('Y-m-d', $date_start);
+        $from = \Carbon\Carbon::createFromFormat('Y-m-d', $date_end);
+
+        $diff_in_days = $to->diffInDays($from);
+
+        $room_price = 500;
+
+        $total = $diff_in_days * $room_price;
 
         $validation = $reservations::whereBetween('date_start', [$date_start, $date_end])->where('tag_deleted', '=', 0)->get();
 
@@ -188,15 +199,19 @@ class ReservationController extends Controller
 
         if($validation->isEmpty()){
             $datas[] = array(
-                'room_id' => $room_id,
+                'room_name' => $room_name,
                 'date_start' => $date_start,
                 'date_end' => $date_end,
                 'firstname' => $firstname,
                 'lastname' => $lastname,
-                'email' => $email
+                'email' => $email,
+                'room_price' => $room_price,
+                'total' => $total
             );
 
             return view('confirmation', compact('datas'));
+
+            //return redirect()->route('confirmation')->with('datas', $datas);
 
             //var_dump($datas);
         }
@@ -204,4 +219,6 @@ class ReservationController extends Controller
             return view('index');
         }
     }
+
+    
 }
