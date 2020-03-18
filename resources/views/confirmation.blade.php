@@ -293,7 +293,7 @@ a {
                                     <td class="content-block">
                                         <table class="invoice">
                                             <tbody><tr>
-                                                <td>{{ ucwords($key['firstname']) }} {{ ucwords($key['lastname']) }}<br>Invoice #12345<br>June 01 2015 <br>{{ $data['email'] }}</td>
+                                                <td>{{ ucwords($key['firstname']) }} {{ ucwords($key['lastname']) }}<!--<br>Invoice #12345--><br><?php echo date('Y-m-d');?> <br>{{ $data['email'] }}</td>
                                               
 
                                             </tr>
