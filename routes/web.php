@@ -48,7 +48,7 @@ Route::group(['middleware' => ['auth']], function() {
 
 		Route::post('payment_create', 'ReservationController@payment_create');
 
-		Route::post('payment_execute/{room_id}', 'ReservationController@payment_execute');
+		Route::post('payment_execute', 'ReservationController@payment_execute');
 
 		Route::post('reservation_info/{room_id}', 'ReservationController@reservation_info');
 

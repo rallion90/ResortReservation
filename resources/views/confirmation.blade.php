@@ -67,13 +67,15 @@
                                 </thead>
                                 <tbody>
                                 @foreach($datas as $data)
-                                <form>
+                                <form method="post" action="/reservation/payment_create">
+                                @csrf    
                                     <tr>
                                         <td>{{ ucwords($data['room_name']) }}</td>
                                         <td class="text-center">{{ $data['date_start'] }}</td>
                                         <td class="text-center">{{ $data['date_end'] }}</td>
                                         <td class="text-right">₱{{ number_format($data['room_price']) }}</td>
                                         <input type="hidden" name="room_id" value="{{ $data['room_id'] }}">
+                                        <input type="hidden" name="room_name" value="{{ $data['room_name'] }}">
                                         <input type="hidden" name="date_start" value="{{ $data['date_start'] }}">
                                         <input type="hidden" name="date_end" value="{{ $data['date_end'] }}">
                                         <input type="hidden" name="room_price" value="{{ $data['room_price'] }}">
@@ -96,6 +98,7 @@
                                         <input type="hidden" name="total" value="{{ $data['total'] }}">
                                     </tr>
                                     <div id="paypal-button"></div>
+                                    <div class="container"><button>Submit</button></div>
                                 </form>
                                 @endforeach
 

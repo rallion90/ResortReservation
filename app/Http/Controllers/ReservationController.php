@@ -33,7 +33,7 @@ class ReservationController extends Controller
 
     public function payment_create(Request $request){
 
-        return $request->all();
+        //dd($request->room_price);
 
     	/*$api = new \PayPal\Rest\ApiContext(
 
@@ -49,11 +49,11 @@ class ReservationController extends Controller
     	$payer->setPaymentMethod("paypal");
 
     	$item1 = new Item();
-    	$item1->setName($request->input('room_name'))
+    	$item1->setName($request->room_name)
 		    ->setCurrency('USD')
 		    ->setQuantity(1)
-		    ->setSku($request->input('room_id')) // Similar to `item_number` in Classic API
-		    ->setPrice($request->input('room_price'));
+		    ->setSku($request->room_id) // Similar to `item_number` in Classic API
+		    ->setPrice($request->room_price);
 		$itemList = new ItemList();
 		$itemList->setItems(array($item1));
 
@@ -61,7 +61,7 @@ class ReservationController extends Controller
 
     	$amount = new Amount();
 		$amount->setCurrency("USD")
-    		->setTotal($request->input('room_price'));
+    		->setTotal(1500);
     		
 
     	$transaction = new Transaction();
@@ -87,11 +87,72 @@ class ReservationController extends Controller
 
 		return $payment;*/
 
+        $api = new \PayPal\Rest\ApiContext(
+
+            new \PayPal\Auth\OAuthTokenCredential(
+                'AQTwAvDxqrsEWy1l7DhQ49gRF-E-mygfvqe5rsdZpAXQwjLVUB5ZSfl8_OFAZlc_DFb3DZPfn5_jcDWn',
+                //Client Id
+                'EBkm03IA73Drp4MjeLjgZpkmXTXtWfDFBaKTGNcuhQSfKvoDMa6xgkAFW__CQTvhesbSGYrhvUC9t1bs'
+                //Client Secret
+            )
+        );
+
+        $payer = new Payer();
+        $payer->setPaymentMethod("paypal");
+
+        $item1 = new Item();
+        $item1->setName('Ground Coffee 40 oz')
+            ->setCurrency('USD')
+            ->setQuantity(1)
+            ->setSku("123123") // Similar to `item_number` in Classic API
+            ->setPrice(7.5);
+        $item2 = new Item();
+        $item2->setName('Granola bars')
+            ->setCurrency('USD')
+            ->setQuantity(5)
+            ->setSku("321321") // Similar to `item_number` in Classic API
+            ->setPrice(2);
+
+        $itemList = new ItemList();
+        $itemList->setItems(array($item1, $item2));
+
+        $details = new Details();
+        $details->setShipping(1.2)
+            ->setTax(1.3)
+            ->setSubtotal(17.50);
+
+        $amount = new Amount();
+        $amount->setCurrency("USD")
+            ->setTotal(20)
+            ->setDetails($details);
+
+        $transaction = new Transaction();
+        $transaction->setAmount($amount)
+            ->setItemList($itemList)
+            ->setDescription("Payment description")
+            ->setInvoiceNumber(uniqid());
+
+        $redirectUrls = new RedirectUrls();
+        
+
+        $redirectUrls->setReturnUrl("http://127.0.0.1:8000/sadyaya/home")
+            ->setCancelUrl("http://127.0.0.1:8000/sadyaya/home");
+
+        $payment = new Payment();
+        $payment->setIntent("sale")
+            ->setPayer($payer)
+            ->setRedirectUrls($redirectUrls)
+            ->setTransactions(array($transaction));
+
+        $request = clone $payment;
+        
+        $payment->create($api);    
+
 		
     }
 
-    public function payment_execute(Request $request, $room_id){
-    	/*$api = new \PayPal\Rest\ApiContext(
+    public function payment_execute(Request $request){
+    	$api = new \PayPal\Rest\ApiContext(
 
     		new \PayPal\Auth\OAuthTokenCredential(
     			'AQTwAvDxqrsEWy1l7DhQ49gRF-E-mygfvqe5rsdZpAXQwjLVUB5ZSfl8_OFAZlc_DFb3DZPfn5_jcDWn',
@@ -111,20 +172,18 @@ class ReservationController extends Controller
     	$amount = new Amount();
     	$details = new Details();
 
-    	$details->setShipping(2.2)
-        	->setTax(1.3)
-        	->setSubtotal(17.50);
+    	$details->setSubtotal($request->subtotal);
 
         $amount->setCurrency('USD');
-    	$amount->setTotal(21);
-    	$amount->setDetails($details);
+    	$amount->setTotal($request->total);
+    	$amount->setDetails($request->room_name);
     	$transaction->setAmount($amount);
 
     	$execution->addTransaction($transaction);
 
     	$result = $payment->execute($execution, $api);
 
-    	return $result;*/
+    	return $result;
 
     	return $request->all();
     }
