@@ -174,7 +174,11 @@ class ReservationController extends Controller
 
     public function validate_entry(Request $request){
         $reservations = new Reservations;
-        $room_name = $request->input('room');
+        $rooms = new Rooms;
+
+        $room = $request->input('room');
+
+        $room_data = $reservations::find($room)->fetch_information2;
         $date_start = $request->input('date_start');
         $date_end = $request->input('date_end');
 
@@ -186,10 +190,8 @@ class ReservationController extends Controller
         $from = \Carbon\Carbon::createFromFormat('Y-m-d', $date_end);
 
         $diff_in_days = $to->diffInDays($from);
-
-        $room_price = 500;
-
-        $total = $diff_in_days * $room_price;
+        
+        $total = $diff_in_days * $room_data->room_price;
 
         $validation = $reservations::whereBetween('date_start', [$date_start, $date_end])->where('tag_deleted', '=', 0)->get();
 
@@ -199,13 +201,14 @@ class ReservationController extends Controller
 
         if($validation->isEmpty()){
             $datas[] = array(
-                'room_name' => $room_name,
+                'room_id' => $room,
+                'room_name' => $room_data->room_name,
                 'date_start' => $date_start,
                 'date_end' => $date_end,
                 'firstname' => $firstname,
                 'lastname' => $lastname,
                 'email' => $email,
-                'room_price' => $room_price,
+                'room_price' => $room_data->room_price,
                 'total' => $total
             );
 

@@ -22,7 +22,7 @@
             
               <select class="form-control" name="room" id="sel1">
               @foreach($helper::get_rooms() as $room)  
-                <option value="{{ $room->room_name }}">{{ ucwords($room->room_name) }}</option>
+                <option value="{{ $room->room_id }}">{{ ucwords($room->room_name) }}</option>
               @endforeach  
               </select>
             
@@ -57,6 +57,8 @@
               <label for="sel1">Email:</label>
               <input type="text" class="datee form-control" placeholder="Enter Email Address" name="email">
             </div>
+
+           
           </div>
 
         

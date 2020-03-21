@@ -8,6 +8,8 @@ class Reservations extends Model
 {
     protected $table = 'reservations';
 
+    protected $primaryKey = 'reservation_id';
+
     protected $fillable = ['room_id', 'email', 'firstname', 'lastname', 'date_start', 'date_end'];
 
     public $timestamps = false;
@@ -15,12 +17,13 @@ class Reservations extends Model
     public function fetch_information(){
     	//return $this->belongsTo('App\UserModel', 'emp_code', 'created_at');
 
-    	return $this->hasOne('App\Rooms', 'room_id', 'room_id');
+    	return $this->hasOne('App\Rooms', 'room_id');
     }
 
     public function fetch_information2(){
-    	//return $this->belongsTo('App\UserModel', 'emp_code', 'created_at');
+        //return $this->belongsTo('App\UserModel', 'emp_code', 'created_at');
 
-    	return $this->hasOne('App\Rooms', 'room_id', 'room_id');
+        return $this->hasOne('App\Rooms', 'room_id', 'room_id');
     }
+
 }
