@@ -67,11 +67,16 @@
                                 </thead>
                                 <tbody>
                                 @foreach($datas as $data)
+                                <form>
                                     <tr>
                                         <td>{{ ucwords($data['room_name']) }}</td>
                                         <td class="text-center">{{ $data['date_start'] }}</td>
                                         <td class="text-center">{{ $data['date_end'] }}</td>
                                         <td class="text-right">₱{{ number_format($data['room_price']) }}</td>
+                                        <input type="hidden" name="room_id" value="{{ $data['room_id'] }}">
+                                        <input type="hidden" name="date_start" value="{{ $data['date_start'] }}">
+                                        <input type="hidden" name="date_end" value="{{ $data['date_end'] }}">
+                                        <input type="hidden" name="room_price" value="{{ $data['room_price'] }}">
                                     </tr>
                                    
                                     <tr>
@@ -79,6 +84,7 @@
                                         <td class="highrow"></td>
                                         <td class="highrow text-center"><strong>Subtotal</strong></td>
                                         <td class="highrow text-right">₱{{ number_format($data['total']) }}</td>
+                                        <input type="hidden" name="subtotal" value="{{ $data['total'] }}">
                                     </tr>
 
                                     
@@ -87,11 +93,17 @@
                                         <td class="emptyrow"></td>
                                         <td class="emptyrow text-center"><strong>Total</strong></td>
                                         <td class="emptyrow text-right">₱{{ number_format($data['total']) }}</td>
+                                        <input type="hidden" name="total" value="{{ $data['total'] }}">
                                     </tr>
-                                @endforeach    
+                                    <div id="paypal-button"></div>
+                                </form>
+                                @endforeach
+
                                 </tbody>
+
                             </table>
                         </div>
+                            
                     </div>
                 </div>
             </div>
@@ -110,7 +122,7 @@
 			    env: 'sandbox', // Or 'production'
 
 			    style: {
-			        size: 'medium',
+			        size: 'small',
 			        color: 'gold',
 			        shape: 'pill'
 			    },
