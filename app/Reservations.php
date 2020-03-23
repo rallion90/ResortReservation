@@ -20,10 +20,6 @@ class Reservations extends Model
     	return $this->hasOne('App\Rooms', 'room_id');
     }
 
-    public function fetch_information2(){
-        //return $this->belongsTo('App\UserModel', 'emp_code', 'created_at');
-
-        return $this->hasOne('App\Rooms', 'room_id', 'room_id');
-    }
+    
 
 }

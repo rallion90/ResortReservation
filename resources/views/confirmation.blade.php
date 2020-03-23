@@ -85,8 +85,8 @@
                                         <td class="highrow"></td>
                                         <td class="highrow"></td>
                                         <td class="highrow text-center"><strong>Subtotal</strong></td>
-                                        <td class="highrow text-right">₱{{ number_format($data['total']) }}</td>
-                                        <input type="hidden" name="subtotal" value="{{ $data['total'] }}">
+                                        <td class="highrow text-right">₱{{ number_format($data['total_in_ph']) }}</td>
+                                        <input type="hidden" name="subtotal" value="{{ $data['total_in_us'] }}">
                                     </tr>
 
                                     
@@ -94,11 +94,13 @@
                                         <td class="emptyrow"><i class="fa fa-barcode iconbig"></i></td>
                                         <td class="emptyrow"></td>
                                         <td class="emptyrow text-center"><strong>Total</strong></td>
-                                        <td class="emptyrow text-right">₱{{ number_format($data['total']) }}</td>
-                                        <input type="hidden" name="total" value="{{ $data['total'] }}">
+                                        <td class="emptyrow text-right">₱{{ number_format($data['total_in_ph']) }}</td>
+                                        
+                                        <input type="hidden" name="total" value="{{ $data['total_in_us'] }}">
                                     </tr>
                                     <div id="paypal-button"></div>
-                                    <div class="container"><button>Submit</button></div>
+                                    <!--<div class="container"><button>Submit</button></div>-->
+                                    <button>Submit</button>
                                 </form>
                                 @endforeach
 
@@ -118,45 +120,32 @@
 <script src="https://www.paypalobjects.com/api/checkout.js"></script>
 
 <script>
-
-	
-
-			paypal.Button.render({
-			    env: 'sandbox', // Or 'production'
-
-			    style: {
-			        size: 'small',
-			        color: 'gold',
-			        shape: 'pill'
-			    },
-			    // Set up the payment:
-			    // 1. Add a payment callback
-			    payment: function(data, actions) {
-			      // 2. Make a request to your server
-			      return actions.request.post('/reservation/payment_create',{
-			        _token: '{{csrf_token()}}'
-			      }).then(function(res) {
-			          // 3. Return res.id from the response
-			          return res.id;
-			        });
-			    },
-			    // Execute the payment:
-			    // 1. Add an onAuthorize callback
-			    onAuthorize: function(data, actions) {
-			      // 2. Make a request to your server
-			      return actions.request.post('/reservation/payment_execute', {
-			        _token: '{{csrf_token()}}',
-			        paymentID: data.paymentID,
-			        payerID:   data.payerID
-			      })
-			        .then(function(res) {
-			          //alert('Transaction Succesful');
-			        });
-			    }
-			}, '#paypal-button');
-		
-			
-
-	
-  
+  paypal.Button.render({
+    env: 'sandbox', // Or 'production'
+    // Set up the payment:
+    // 1. Add a payment callback
+    payment: function(data, actions) {
+      // 2. Make a request to your server
+      return actions.request.post('/reservation/payment_create',
+      {
+        _token: '{{csrf_token()}}'
+      })
+        .then(function(res) {
+          // 3. Return res.id from the response
+          return res.id;
+        });
+    },
+    // Execute the payment:
+    // 1. Add an onAuthorize callback
+    onAuthorize: function(data, actions) {
+      // 2. Make a request to your server
+      return actions.request.post('/reservation/payment_execute', {
+        paymentID: data.paymentID,
+        payerID:   data.payerID
+      })
+        .then(function(res) {
+          // 3. Show the buyer a confirmation message.
+        });
+    }
+  }, '#paypal-button');
 </script>

@@ -33,159 +33,68 @@ class ReservationController extends Controller
 
     public function payment_create(Request $request){
 
-        //dd($request->room_price);
-
-    	/*$api = new \PayPal\Rest\ApiContext(
-
-    		new \PayPal\Auth\OAuthTokenCredential(
-    			'AQTwAvDxqrsEWy1l7DhQ49gRF-E-mygfvqe5rsdZpAXQwjLVUB5ZSfl8_OFAZlc_DFb3DZPfn5_jcDWn',
-    			//Client Id
-    			'EBkm03IA73Drp4MjeLjgZpkmXTXtWfDFBaKTGNcuhQSfKvoDMa6xgkAFW__CQTvhesbSGYrhvUC9t1bs'
-    			//Client Secret
-    		)
-    	);
-
-    	$payer = new Payer();
-    	$payer->setPaymentMethod("paypal");
-
-    	$item1 = new Item();
-    	$item1->setName($request->room_name)
-		    ->setCurrency('USD')
-		    ->setQuantity(1)
-		    ->setSku($request->room_id) // Similar to `item_number` in Classic API
-		    ->setPrice($request->room_price);
-		$itemList = new ItemList();
-		$itemList->setItems(array($item1));
-
-		
-
-    	$amount = new Amount();
-		$amount->setCurrency("USD")
-    		->setTotal(1500);
-    		
-
-    	$transaction = new Transaction();
-		$transaction->setAmount($amount)
-    		->setItemList($itemList)
-    		->setDescription("Reservation Succesful")
-    		->setInvoiceNumber(uniqid());
-
-		$redirectUrls = new RedirectUrls();
-		
-
-    	$redirectUrls->setReturnUrl("http://127.0.0.1:8000/sadyaya/home")
-    		->setCancelUrl("http://127.0.0.1:8000/sadyaya/home");
-
-    	$payment = new Payment();
-		$payment->setIntent("sale")
-		    ->setPayer($payer)
-		    ->setRedirectUrls($redirectUrls)
-		    ->setTransactions(array($transaction));
-
-		$request = clone $payment;
-		$payment->create($api);
-
-		return $payment;*/
-
-        $api = new \PayPal\Rest\ApiContext(
-
-            new \PayPal\Auth\OAuthTokenCredential(
-                'AQTwAvDxqrsEWy1l7DhQ49gRF-E-mygfvqe5rsdZpAXQwjLVUB5ZSfl8_OFAZlc_DFb3DZPfn5_jcDWn',
-                //Client Id
-                'EBkm03IA73Drp4MjeLjgZpkmXTXtWfDFBaKTGNcuhQSfKvoDMa6xgkAFW__CQTvhesbSGYrhvUC9t1bs'
-                //Client Secret
-            )
+        $apiContext = new \PayPal\Rest\ApiContext(
+          new \PayPal\Auth\OAuthTokenCredential(
+            'AQTwAvDxqrsEWy1l7DhQ49gRF-E-mygfvqe5rsdZpAXQwjLVUB5ZSfl8_OFAZlc_DFb3DZPfn5_jcDWn',
+            'EBkm03IA73Drp4MjeLjgZpkmXTXtWfDFBaKTGNcuhQSfKvoDMa6xgkAFW__CQTvhesbSGYrhvUC9t1bs'
+          )
         );
 
         $payer = new Payer();
         $payer->setPaymentMethod("paypal");
 
         $item1 = new Item();
-        $item1->setName('Ground Coffee 40 oz')
+        $item1->setName($request->room_name)
             ->setCurrency('USD')
             ->setQuantity(1)
-            ->setSku("123123") // Similar to `item_number` in Classic API
-            ->setPrice(7.5);
-        $item2 = new Item();
-        $item2->setName('Granola bars')
-            ->setCurrency('USD')
-            ->setQuantity(5)
-            ->setSku("321321") // Similar to `item_number` in Classic API
-            ->setPrice(2);
+            ->setSku($request->room_id) // Similar to `item_number` in Classic API
+            ->setPrice($request->total);
+       
 
         $itemList = new ItemList();
-        $itemList->setItems(array($item1, $item2));
+        $itemList->setItems(array($item1));
 
-        $details = new Details();
+        /*$details = new Details();
         $details->setShipping(1.2)
             ->setTax(1.3)
-            ->setSubtotal(17.50);
+            ->setSubtotal(17.50);*/
 
         $amount = new Amount();
         $amount->setCurrency("USD")
-            ->setTotal(20)
-            ->setDetails($details);
+            ->setTotal($request->total);
+            //->setDetails($details);
 
         $transaction = new Transaction();
         $transaction->setAmount($amount)
             ->setItemList($itemList)
-            ->setDescription("Payment description")
+            ->setDescription("Balai Sadyaya Reservation Payment")
             ->setInvoiceNumber(uniqid());
 
         $redirectUrls = new RedirectUrls();
-        
-
-        $redirectUrls->setReturnUrl("http://127.0.0.1:8000/sadyaya/home")
-            ->setCancelUrl("http://127.0.0.1:8000/sadyaya/home");
+        $redirectUrls->setReturnUrl("http://127.0.0.1:8000")
+            ->setCancelUrl("http://127.0.0.1:8000");
 
         $payment = new Payment();
-        $payment->setIntent("sale")
+        $payment->setIntent("Reservation")
             ->setPayer($payer)
             ->setRedirectUrls($redirectUrls)
             ->setTransactions(array($transaction));
 
-        $request = clone $payment;
-        
-        $payment->create($api);    
+        try{
+            $payment->create($apiContext);
+        }catch(Exception $ex){
+            echo $ex;
+            exit(1);
+        }
 
+        return $payment;
+
+        //return $request->all();
 		
     }
 
     public function payment_execute(Request $request){
-    	$api = new \PayPal\Rest\ApiContext(
-
-    		new \PayPal\Auth\OAuthTokenCredential(
-    			'AQTwAvDxqrsEWy1l7DhQ49gRF-E-mygfvqe5rsdZpAXQwjLVUB5ZSfl8_OFAZlc_DFb3DZPfn5_jcDWn',
-    			//Client Id
-    			'EBkm03IA73Drp4MjeLjgZpkmXTXtWfDFBaKTGNcuhQSfKvoDMa6xgkAFW__CQTvhesbSGYrhvUC9t1bs'
-    			//Client Secret
-    		)
-    	);
-
-    	$payment_id = $request->paymentID;
-    	$payment = Payment::get($payment_id, $api);
-
-    	$execution = new PaymentExecution();
-    	$execution->setPayerId($request->payerID);
-
-    	$transaction = new Transaction();
-    	$amount = new Amount();
-    	$details = new Details();
-
-    	$details->setSubtotal($request->subtotal);
-
-        $amount->setCurrency('USD');
-    	$amount->setTotal($request->total);
-    	$amount->setDetails($request->room_name);
-    	$transaction->setAmount($amount);
-
-    	$execution->addTransaction($transaction);
-
-    	$result = $payment->execute($execution, $api);
-
-    	return $result;
-
-    	return $request->all();
+    	
     }
 
     public function reservation_info(){
@@ -237,7 +146,7 @@ class ReservationController extends Controller
 
         $room = $request->input('room');
 
-        $room_data = $reservations::find($room)->fetch_information2;
+        $room_data = $rooms::find($room)->fetch_information2;
         $date_start = $request->input('date_start');
         $date_end = $request->input('date_end');
 
@@ -250,7 +159,9 @@ class ReservationController extends Controller
 
         $diff_in_days = $to->diffInDays($from);
         
-        $total = $diff_in_days * $room_data->room_price;
+        $total_in_ph = $diff_in_days * $room_data->room_price;
+
+        $total_in_us = $total_in_ph * 0.019;
 
         $validation = $reservations::whereBetween('date_start', [$date_start, $date_end])->where('tag_deleted', '=', 0)->get();
 
@@ -268,7 +179,8 @@ class ReservationController extends Controller
                 'lastname' => $lastname,
                 'email' => $email,
                 'room_price' => $room_data->room_price,
-                'total' => $total
+                'total_in_ph' => $total_in_ph,
+                'total_in_us' => $total_in_us
             );
 
             return view('confirmation', compact('datas'));

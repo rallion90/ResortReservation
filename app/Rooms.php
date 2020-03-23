@@ -15,7 +15,11 @@ class Rooms extends Model
 
     protected $fillable = ['room_id', 'room_name', 'room_description', 'room_price'];
 
-    
+    public function fetch_information2(){
+        //return $this->belongsTo('App\UserModel', 'emp_code', 'created_at');
+
+        return $this->hasOne('App\Rooms', 'room_id', 'room_id');
+    }
 
      
 

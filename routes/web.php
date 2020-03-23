@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+
 Route::get('test_controller', 'RoomController@fetch_room');
 
 
@@ -46,11 +48,11 @@ Route::group(['middleware' => ['auth']], function() {
 
 		Route::get('entry/{room_id}', 'ReservationController@index');
 
+		Route::post('reservation_info/{room_id}', 'ReservationController@reservation_info');
+
 		Route::post('payment_create', 'ReservationController@payment_create');
 
 		Route::post('payment_execute', 'ReservationController@payment_execute');
-
-		Route::post('reservation_info/{room_id}', 'ReservationController@reservation_info');
 
 		Route::post('testing', 'testController@testing');
 
