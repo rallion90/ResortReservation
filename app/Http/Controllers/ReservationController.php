@@ -44,20 +44,16 @@ class ReservationController extends Controller
         $payer->setPaymentMethod("paypal");
 
         $item1 = new Item();
-        $item1->setName($request->room_name)
+        $item1->setName($request->name)
             ->setCurrency('USD')
             ->setQuantity(1)
-            ->setSku($request->room_id) // Similar to `item_number` in Classic API
+            ->setSku($request->id) // Similar to `item_number` in Classic API
             ->setPrice($request->total);
-       
 
         $itemList = new ItemList();
         $itemList->setItems(array($item1));
 
-        /*$details = new Details();
-        $details->setShipping(1.2)
-            ->setTax(1.3)
-            ->setSubtotal(17.50);*/
+        
 
         $amount = new Amount();
         $amount->setCurrency("USD")
@@ -67,15 +63,16 @@ class ReservationController extends Controller
         $transaction = new Transaction();
         $transaction->setAmount($amount)
             ->setItemList($itemList)
-            ->setDescription("Balai Sadyaya Reservation Payment")
+            ->setDescription("Payment description")
             ->setInvoiceNumber(uniqid());
 
+
         $redirectUrls = new RedirectUrls();
-        $redirectUrls->setReturnUrl("http://127.0.0.1:8000")
-            ->setCancelUrl("http://127.0.0.1:8000");
+        $redirectUrls->setReturnUrl("http://127.0.0.1:8000/")
+            ->setCancelUrl("http://127.0.0.1:8000/");
 
         $payment = new Payment();
-        $payment->setIntent("Reservation")
+        $payment->setIntent("sale")
             ->setPayer($payer)
             ->setRedirectUrls($redirectUrls)
             ->setTransactions(array($transaction));
@@ -89,7 +86,7 @@ class ReservationController extends Controller
 
         return $payment;
 
-        //return $request->all();
+        //return $request->total;
 		
     }
 

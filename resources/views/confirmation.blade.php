@@ -74,8 +74,8 @@
                                         <td class="text-center">{{ $data['date_start'] }}</td>
                                         <td class="text-center">{{ $data['date_end'] }}</td>
                                         <td class="text-right">₱{{ number_format($data['room_price']) }}</td>
-                                        <input type="hidden" name="room_id" value="{{ $data['room_id'] }}">
-                                        <input type="hidden" name="room_name" value="{{ $data['room_name'] }}">
+                                        <input type="hidden" id="room_id" name="room_id" value="{{ $data['room_id'] }}">
+                                        <input type="hidden" id="room_name" name="room_name" value="{{ $data['room_name'] }}">
                                         <input type="hidden" name="date_start" value="{{ $data['date_start'] }}">
                                         <input type="hidden" name="date_end" value="{{ $data['date_end'] }}">
                                         <input type="hidden" name="room_price" value="{{ $data['room_price'] }}">
@@ -96,7 +96,7 @@
                                         <td class="emptyrow text-center"><strong>Total</strong></td>
                                         <td class="emptyrow text-right">₱{{ number_format($data['total_in_ph']) }}</td>
                                         
-                                        <input type="hidden" name="total" value="{{ $data['total_in_us'] }}">
+                                        <input type="hidden" id="total" name="total" value="{{ $data['total_in_us'] }}">
                                     </tr>
                                     <div id="paypal-button"></div>
                                     <!--<div class="container"><button>Submit</button></div>-->
@@ -128,7 +128,10 @@
       // 2. Make a request to your server
       return actions.request.post('/reservation/payment_create',
       {
-        _token: '{{csrf_token()}}'
+        _token: '{{csrf_token()}}',
+        total: document.getElementById('total').value,
+        name: document.getElementById('room_name').value,
+        id: document.getElementById('room_id').value
       })
         .then(function(res) {
           // 3. Return res.id from the response
