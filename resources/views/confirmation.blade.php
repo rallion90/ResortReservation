@@ -62,13 +62,13 @@
                                         <td><strong>Room Name</strong></td>
                                         <td class="text-center"><strong>In</strong></td>
                                         <td class="text-center"><strong>Out</strong></td>
-                                        <td class="text-right"><strong>Total</strong></td>
+                                        <td class="text-right"><strong>Room Price</strong></td>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($datas as $data)
-                                <form method="post" action="/reservation/payment_create">
-                                @csrf    
+                                <form method="post">
+                                    
                                     <tr>
                                         <td>{{ ucwords($data['room_name']) }}</td>
                                         <td class="text-center">{{ $data['date_start'] }}</td>
@@ -143,6 +143,7 @@
     onAuthorize: function(data, actions) {
       // 2. Make a request to your server
       return actions.request.post('/reservation/payment_execute', {
+        _token: '{{csrf_token()}}',
         paymentID: data.paymentID,
         payerID:   data.payerID
       })

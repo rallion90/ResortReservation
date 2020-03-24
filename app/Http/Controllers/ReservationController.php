@@ -39,16 +39,16 @@ class ReservationController extends Controller
             'EBkm03IA73Drp4MjeLjgZpkmXTXtWfDFBaKTGNcuhQSfKvoDMa6xgkAFW__CQTvhesbSGYrhvUC9t1bs'
           )
         );
-
+ 
         $payer = new Payer();
         $payer->setPaymentMethod("paypal");
 
         $item1 = new Item();
-        $item1->setName($request->name)
+        $item1->setName('requestname')
             ->setCurrency('USD')
             ->setQuantity(1)
-            ->setSku($request->id) // Similar to `item_number` in Classic API
-            ->setPrice($request->total);
+            ->setSku('213123') // Similar to `item_number` in Classic API
+            ->setPrice(75);
 
         $itemList = new ItemList();
         $itemList->setItems(array($item1));
@@ -57,7 +57,7 @@ class ReservationController extends Controller
 
         $amount = new Amount();
         $amount->setCurrency("USD")
-            ->setTotal($request->total);
+            ->setTotal(75);
             //->setDetails($details);
 
         $transaction = new Transaction();
@@ -91,7 +91,7 @@ class ReservationController extends Controller
     }
 
     public function payment_execute(Request $request){
-    	
+    	return "success";
     }
 
     public function reservation_info(){
