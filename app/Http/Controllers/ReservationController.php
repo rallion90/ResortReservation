@@ -23,6 +23,7 @@ use PayPal\Api\Payment;
 use PayPal\Api\RedirectUrls;
 use PayPal\Api\Transaction;
 use PayPal\Api\PaymentExecution;
+use PayPal\Api\Invoice;
 
 class ReservationController extends Controller
 {
@@ -87,6 +88,8 @@ class ReservationController extends Controller
     }
 
     public function payment_execute(Request $request){
+        //$reservation = new Reservations;
+
          $apiContext = new \PayPal\Rest\ApiContext(
           new \PayPal\Auth\OAuthTokenCredential(
             'AQTwAvDxqrsEWy1l7DhQ49gRF-E-mygfvqe5rsdZpAXQwjLVUB5ZSfl8_OFAZlc_DFb3DZPfn5_jcDWn',
@@ -99,9 +102,13 @@ class ReservationController extends Controller
         $execution = new PaymentExecution();
         $execution->setPayerId($request->payerID);
 
+        
+
 
         try{
             $result = $payment->execute($execution, $apiContext);
+
+            
             try {
                 $payment = Payment::get($paymentId, $apiContext);
             }catch(Exception $ex){
@@ -113,7 +120,23 @@ class ReservationController extends Controller
             exit(1);
         }
 
-        //return $payment." ".$request->invoice_number;    
+        //dd($payment->transactions[0]->invoice_number);
+        //dd($payment->id);
+        //d($payment->transactions[0]->item_list[0]->items[0]->sku);
+
+        $customer_info = array(
+            "room_id" => $payment->transactions[0]->item_list->items[0]->sku,
+            "room_name" => $payment->transactions[0]->item_list->items[0]->name,
+            "email" => $request->email,
+            "first_name" => $request->firstname,
+            "last_name" => $request->lastname,
+            "date_start" => $request->date_start,
+            "date_end" => $request->date_end,
+            "payment_id" => $payment->id,
+            "invoice_number" => $payment->transactions[0]->invoice_number,  
+        );
+        DB::table('reservations')->insert($customer_info);
+
     }
 
     public function reservation_info(){

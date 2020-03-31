@@ -68,6 +68,7 @@
                                 <tbody>
                                 @foreach($datas as $data)
                                 <form method="post">
+
                                     
                                     <tr>
                                         <td>{{ ucwords($data['room_name']) }}</td>
@@ -76,14 +77,14 @@
                                         <td class="text-right">₱{{ number_format($data['room_price']) }}</td>
                                         <input type="hidden" id="room_id" name="room_id" value="{{ $data['room_id'] }}">
                                         <input type="hidden" id="room_name" name="room_name" value="{{ $data['room_name'] }}">
-                                        <input type="hidden" name="date_start" value="{{ $data['date_start'] }}">
-                                        <input type="hidden" name="date_end" value="{{ $data['date_end'] }}">
+                                        <input type="hidden" id="date_start" name="date_start" value="{{ $data['date_start'] }}">
+                                        <input type="hidden" id="date_end" name="date_end" value="{{ $data['date_end'] }}">
                                         <input type="hidden" name="room_price" value="{{ $data['room_price'] }}">
 
                                         <!-- data information users-->
-                                        <input type="hidden" name="firstname" value="{{ $data['firstname'] }}">
-                                        <input type="hidden" name="lastname" value="{{ $data['lastname'] }}">
-                                        <input type="hidden" name="email" value="{{ $data['email'] }}">
+                                        <input type="hidden" id="firstname" name="firstname" value="{{ $data['firstname'] }}">
+                                        <input type="hidden" id="lastname" name="lastname" value="{{ $data['lastname'] }}">
+                                        <input type="hidden" id="email" name="email" value="{{ $data['email'] }}">
                                     </tr>
                                    
                                     <tr>
@@ -153,11 +154,14 @@
         payerID:   data.payerID,
         firstname: document.getElementById('firstname').value,
         lastname: document.getElementById('lastname').value,
-        email: document.getElementById('email').value
+        email: document.getElementById('email').value,
+        date_start: document.getElementById('date_start').value,
+        date_end: document.getElementById('date_end').value
       })
         .then(function(res) {
           // 3. Show the buyer a confirmation message.
-            alert("Payment Success");
+            alert("Please Check your Email for your Transaction Details");
+            window.location.href="{{  route('home') }}";
         });
     }
   }, '#paypal-button');

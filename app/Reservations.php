@@ -10,14 +10,14 @@ class Reservations extends Model
 
     protected $primaryKey = 'reservation_id';
 
-    protected $fillable = ['room_id', 'email', 'firstname', 'lastname', 'date_start', 'date_end'];
+    protected $fillable = ['room_id', 'room_name', 'email', 'firstname', 'lastname', 'date_start', 'date_end', 'invoice_number', 'payment_id'];
 
     public $timestamps = false;
 
     public function fetch_information(){
     	//return $this->belongsTo('App\UserModel', 'emp_code', 'created_at');
 
-    	return $this->hasOne('App\Rooms', 'room_id');
+    	return $this->hasOne('App\Rooms', 'room_id', 'room_id');
     }
 
     
