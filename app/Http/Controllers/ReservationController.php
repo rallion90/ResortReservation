@@ -44,21 +44,19 @@ class ReservationController extends Controller
         $payer->setPaymentMethod("paypal");
 
         $item1 = new Item();
-        $item1->setName('requestname')
+        $item1->setName($request->name)
             ->setCurrency('USD')
             ->setQuantity(1)
-            ->setSku('213123') // Similar to `item_number` in Classic API
-            ->setPrice(75);
-
+            ->setSku($request->id) // Similar to `item_number` in Classic API
+            ->setPrice($request->total);
+		
         $itemList = new ItemList();
         $itemList->setItems(array($item1));
 
-        
-
         $amount = new Amount();
         $amount->setCurrency("USD")
-            ->setTotal(75);
-            //->setDetails($details);
+            ->setTotal($request->total);
+            
 
         $transaction = new Transaction();
         $transaction->setAmount($amount)
@@ -66,10 +64,10 @@ class ReservationController extends Controller
             ->setDescription("Payment description")
             ->setInvoiceNumber(uniqid());
 
-
+        
         $redirectUrls = new RedirectUrls();
-        $redirectUrls->setReturnUrl("http://127.0.0.1:8000/")
-            ->setCancelUrl("http://127.0.0.1:8000/");
+        $redirectUrls->setReturnUrl("http://127.0.0.1:8000/sadyaya/home")
+            ->setCancelUrl("http://127.0.0.1:8000/sadyaya/home");
 
         $payment = new Payment();
         $payment->setIntent("sale")
@@ -77,21 +75,45 @@ class ReservationController extends Controller
             ->setRedirectUrls($redirectUrls)
             ->setTransactions(array($transaction));
 
-        try{
+        
             $payment->create($apiContext);
-        }catch(Exception $ex){
-            echo $ex;
-            exit(1);
-        }
+        
+
+        //$approvalUrl = $payment->getApprovalLink();
+
+        
 
         return $payment;
-
-        //return $request->total;
-		
     }
 
     public function payment_execute(Request $request){
-    	return "success";
+         $apiContext = new \PayPal\Rest\ApiContext(
+          new \PayPal\Auth\OAuthTokenCredential(
+            'AQTwAvDxqrsEWy1l7DhQ49gRF-E-mygfvqe5rsdZpAXQwjLVUB5ZSfl8_OFAZlc_DFb3DZPfn5_jcDWn',
+            'EBkm03IA73Drp4MjeLjgZpkmXTXtWfDFBaKTGNcuhQSfKvoDMa6xgkAFW__CQTvhesbSGYrhvUC9t1bs'
+          )
+        );
+    	$paymentId = $request->paymentID;
+        $payment = Payment::get($paymentId, $apiContext);
+
+        $execution = new PaymentExecution();
+        $execution->setPayerId($request->payerID);
+
+
+        try{
+            $result = $payment->execute($execution, $apiContext);
+            try {
+                $payment = Payment::get($paymentId, $apiContext);
+            }catch(Exception $ex){
+                alert($ex);
+                exit(1);
+            }
+        }catch(Exception $ex){
+            alert($ex);
+            exit(1);
+        }
+
+        //return $payment." ".$request->invoice_number;    
     }
 
     public function reservation_info(){

@@ -79,6 +79,11 @@
                                         <input type="hidden" name="date_start" value="{{ $data['date_start'] }}">
                                         <input type="hidden" name="date_end" value="{{ $data['date_end'] }}">
                                         <input type="hidden" name="room_price" value="{{ $data['room_price'] }}">
+
+                                        <!-- data information users-->
+                                        <input type="hidden" name="firstname" value="{{ $data['firstname'] }}">
+                                        <input type="hidden" name="lastname" value="{{ $data['lastname'] }}">
+                                        <input type="hidden" name="email" value="{{ $data['email'] }}">
                                     </tr>
                                    
                                     <tr>
@@ -145,10 +150,14 @@
       return actions.request.post('/reservation/payment_execute', {
         _token: '{{csrf_token()}}',
         paymentID: data.paymentID,
-        payerID:   data.payerID
+        payerID:   data.payerID,
+        firstname: document.getElementById('firstname').value,
+        lastname: document.getElementById('lastname').value,
+        email: document.getElementById('email').value
       })
         .then(function(res) {
           // 3. Show the buyer a confirmation message.
+            alert("Payment Success");
         });
     }
   }, '#paypal-button');
